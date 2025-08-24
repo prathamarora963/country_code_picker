@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'country_code_picker.dart';
+import '../country_code_picker.dart';
 
 void main() {
   runApp(const MyApp());
