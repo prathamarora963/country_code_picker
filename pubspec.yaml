@@ -2,6 +2,8 @@ name: pratham_country_picker
 description: "A simple and customizable Flutter widget to pick country codes for phone numbers. Lightweight, easy to use, and perfect for authentication forms."
 version: 0.0.4
 homepage: https://github.com/prathamarora963/country_code_picker.git
+example:
+  path: example
 
 environment:
   sdk: ^3.8.1
