@@ -21,4 +21,4 @@ Add this package to your project by including it in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  country_code_picker: ^0.0.1
+  country_code_picker: ^0.0.3
