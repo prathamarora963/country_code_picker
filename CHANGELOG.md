@@ -4,7 +4,24 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [2.0.0] – Latest
+## [3.0.0] – Latest
+### 🌍 Added
+- **Localization support** for multiple languages:
+  - English (`en`)
+  - Hindi (`hi`)
+  - French (`fr`)
+  - German (`de`)
+  - Spanish (`es`)
+- Auto-detect locale from device settings.
+- Ability to override locale manually in `MaterialApp`.
+
+### 🎨 Improved
+- Localized **search hint text, titles, and country names**.
+- Added screenshots for each supported language in README.
+
+---
+
+## [2.0.0] – Stable
 ### 🚀 Added
 - Stable release with all core features.
 - Country picker bottom sheet with smooth UI and rounded corners.
@@ -30,4 +47,3 @@ All notable changes to this project will be documented here.
 - Lightweight demo with a few countries.
 
 ---
-

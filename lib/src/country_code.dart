@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:world_code_picker/country_code_picker.dart';
 
 /// Immutable country model.
 class Country {
@@ -27,8 +29,9 @@ String _iso2ToEmoji(String isoCode) {
 
 /// Customization options for the bottom sheet.
 class CountryPickerStyle {
-  final String sheetTitle;
-  final String searchHintText;
+  final String? sheetTitle;        // if null, uses localization
+  final String? searchHintText;    // if null, uses localization
+  final String? noResultsText;     // if null, uses localization
   final double cornerRadius;
   final EdgeInsets contentPadding;
   final bool showSearch;
@@ -44,8 +47,9 @@ class CountryPickerStyle {
   final double maxSheetSize;     // 0.0 - 1.0
 
   const CountryPickerStyle({
-    this.sheetTitle = 'Select country',
-    this.searchHintText = 'Search by name, ISO, or code',
+    this.sheetTitle,
+    this.searchHintText,
+    this.noResultsText,
     this.cornerRadius = 20,
     this.contentPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.showSearch = true,
@@ -60,6 +64,16 @@ class CountryPickerStyle {
     this.minSheetSize = 0.5,
     this.maxSheetSize = 0.95,
   });
+
+
+  String resolveSheetTitle(BuildContext context) =>
+      sheetTitle ?? CountryPickerLocalizations.of(context).sheetTitle;
+
+  String resolveSearchHint(BuildContext context) =>
+      searchHintText ?? CountryPickerLocalizations.of(context).searchHint;
+
+  String resolveNoResults(BuildContext context) =>
+      noResultsText ?? CountryPickerLocalizations.of(context).noResults;
 }
 
 /// Normalize and sort a list of countries.
@@ -148,8 +162,11 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
   List<Country> get _filtered {
     if (_query.isEmpty) return widget.all;
     final q = _query.toLowerCase();
+    final loc = CountryPickerLocalizations.of(context);
     return widget.all.where((c) {
-      return c.name.toLowerCase().contains(q) ||
+      final localizedName = loc.countryName(c.isoCode, c.name).toLowerCase();
+      return localizedName.contains(q) ||
+          c.name.toLowerCase().contains(q) ||
           c.isoCode.toLowerCase().contains(q) ||
           c.dialCode.toLowerCase().contains(q) ||
           c.dialCode.replaceAll('+', '').contains(q.replaceAll('+', ''));
@@ -182,6 +199,7 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final handleColor = theme.colorScheme.onSurface.withOpacity(0.2);
+    final loc = CountryPickerLocalizations.of(context);
 
     return DraggableScrollableSheet(
       expand: false,
@@ -208,12 +226,13 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                 children: [
                   Expanded(
                     child: Text(
-                      widget.style.sheetTitle,
-                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                      widget.style.resolveSheetTitle(context),
+                      style:
+                      theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                   IconButton(
-                    tooltip: 'Close',
+                    tooltip: MaterialLocalizations.of(context).closeButtonLabel,
                     icon: const Icon(Icons.close),
                     onPressed: () => Navigator.of(context).maybePop(),
                   ),
@@ -228,13 +247,14 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                   textInputAction: TextInputAction.search,
                   style: widget.style.searchTextStyle ?? theme.textTheme.bodyMedium,
                   decoration: InputDecoration(
-                    hintText: widget.style.searchHintText,
+                    hintText: widget.style.resolveSearchHint(context),
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: _query.isEmpty
                         ? null
                         : IconButton(
                       onPressed: () => _search.clear(),
                       icon: const Icon(Icons.clear),
+                      tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
                     ),
                     border: widget.style.searchBorder ??
                         OutlineInputBorder(
@@ -254,8 +274,8 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                     runSpacing: 8,
                     children: _favorites.map((c) {
                       return ActionChip(
-                        backgroundColor: widget.style.chipColor ??
-                            theme.colorScheme.secondaryContainer,
+                        backgroundColor:
+                        widget.style.chipColor ?? theme.colorScheme.secondaryContainer,
                         label: Text('${c.flagEmoji}  ${c.dialCode}'),
                         onPressed: () => Navigator.of(context).pop(c),
                       );
@@ -271,7 +291,7 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Text(
-                    'No results',
+                    widget.style.resolveNoResults(context),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
@@ -288,14 +308,19 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                 ),
                 itemBuilder: (_, i) {
                   final c = results[i];
-                  return  ListTile(
+                  final displayName =
+                  CountryPickerLocalizations.of(context).countryName(
+                    c.isoCode,
+                    c.name,
+                  );
+                  return ListTile(
                     dense: false,
                     leading: CircleAvatar(
                       backgroundColor: theme.colorScheme.surface,
                       child: Text(c.flagEmoji, style: const TextStyle(fontSize: 18)),
                     ),
                     title: _highlightedText(
-                      full: c.name,
+                      full: displayName,
                       query: _query,
                       base: widget.style.titleTextStyle ?? theme.textTheme.bodyLarge,
                       highlightColor: theme.colorScheme.primary,
@@ -313,7 +338,6 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                     ),
                     onTap: () => Navigator.of(context).pop(c),
                   );
-
                 },
               ),
             ),
@@ -360,7 +384,7 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
 }
 
 // A minimal default list for demo purposes.
-// For production, replace with a complete list (ISO2 + dial codes).
+// Replace with a complete ISO2 + dial code dataset for production.
 const List<Country> _defaultCountries = [
   Country(name: 'Afghanistan', isoCode: 'AF', dialCode: '+93'),
   Country(name: 'Albania', isoCode: 'AL', dialCode: '+355'),
@@ -573,4 +597,3 @@ const List<Country> _defaultCountries = [
   Country(name: 'Zimbabwe', isoCode: 'ZW', dialCode: '+263'),
 
 ];
-
