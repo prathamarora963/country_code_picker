@@ -4,7 +4,14 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [3.0.0] – Latest
+## [4.0.0] – Latest
+### 📝 Updated
+- **Documentation only**: Improved README with better usage examples, screenshots, and localization details.
+- No breaking changes or code updates.
+
+---
+
+## [3.0.0]
 ### 🌍 Added
 - **Localization support** for multiple languages:
   - English (`en`)
@@ -21,7 +28,7 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [2.0.0] – Stable
+## [2.0.0]
 ### 🚀 Added
 - Stable release with all core features.
 - Country picker bottom sheet with smooth UI and rounded corners.
@@ -39,11 +46,9 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [1.0.0] – Pre-release
+## [1.0.0]
 - Polished bottom sheet picker.
 - Added search field with placeholder.
 - Initial selection support.
 - Callback when selecting a country.
 - Lightweight demo with a few countries.
-
----

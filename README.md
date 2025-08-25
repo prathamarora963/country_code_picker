@@ -28,7 +28,7 @@ Add the dependency in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  world_code_picker: ^3.0.0
+  world_code_picker: ^4.0.0
 ```
 
 Run:
@@ -265,7 +265,29 @@ supportedLocales: const [
 ],
 
 ```
+---
+🌐 Get Localized Country Name
 
+You can access the localized country name using the CountryPickerLocalizations helper:
+
+```dart
+onPressed: () async {
+  final result = await showCountryCodePickerBottomSheet(
+    context: context,
+    style: const CountryPickerStyle(cornerRadius: 24),
+  );
+
+  if (result != null) {
+    final loc = CountryPickerLocalizations.of(context);
+    final displayName = loc.countryName(result.isoCode, result.name);
+
+    print("Localized name: $displayName");
+
+    setState(() => _selected = result);
+  }
+}
+
+```
 ---
 📸 Screenshots by Language
 
