@@ -1,28 +1,33 @@
-## 0.0.7
+# 📦 Changelog
 
-# CHANGELOG
+All notable changes to this project will be documented here.
 
+---
 
-## [0.1.0] – Initial release
-### Added
-- CountryCodePicker widget with modern, rounded-corner bottom sheet UI.
-- Search by country name, ISO code, and dial code with highlighted matches.
-- Favorite countries pinned as quick-select chips.
-- Emoji flags generated from ISO codes (no assets required).
-- Flexible theming via CountryPickerStyle:
-    - Title, search hint, colors, corner radius, tile selection color, etc.
-    - DraggableScrollableSheet sizing controls (initial/min/max).
-- Trigger chip with:
-    - Optional flag, dial code, or country name.
-    - Compact mode for dense layouts.
-- Initialization options:
-    - initialSelection by ISO (e.g., US) or dial code (e.g., +1).
-    - initialCountryOverride to set a Country directly.
-- Custom country data:
-    - Accepts a provided list; normalizes ISO capitalization and “+” prefix on dial codes.
-    - Sorts by country name for consistent UX.
-- Clean public API:
-    - Country model with name, isoCode, dialCode, and computed flagEmoji.
-- Minimal default demo list of countries; recommend providing a full dataset in production.
+## [1.0.0] – Latest
+### 🚀 Added
+- Stable release with all core features.
+- Country picker bottom sheet with smooth UI and rounded corners.
+- Search by **country name, ISO code, or dial code**.
+- Emoji flags 🇮🇳 🇺🇸 🇬🇧 (auto-generated from ISO codes, no assets needed).
+- Support for **favorite countries** (quick-select chips).
+- Flexible **theming** via `CountryPickerStyle`:
+  - Custom title, search hint, corner radius, colors, selection color, etc.
+  - Draggable sheet sizing (min, max, initial).
 
+### 🎨 Improved
+- Cleaner public API with `Country` model (`name`, `isoCode`, `dialCode`, `flagEmoji`).
+- Consistent sorting of countries by name for a better UX.
+- Optimized default country list (lightweight).
+
+---
+
+## [0.0.9] – Pre-release
+- Polished bottom sheet picker.
+- Added search field with placeholder.
+- Initial selection support.
+- Callback when selecting a country.
+- Lightweight demo with a few countries.
+
+---
 
