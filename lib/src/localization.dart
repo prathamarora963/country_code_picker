@@ -14,7 +14,6 @@ class CountryPickerLocalizations {
         const CountryPickerLocalizations(Locale('en'));
   }
 
-  // Extend list as needed.
   static const supportedLocales = <Locale>[
     Locale('en'),
     Locale('hi'),
@@ -23,12 +22,10 @@ class CountryPickerLocalizations {
     Locale('de'),
   ];
 
-  // UI strings
   String get sheetTitle => _stringsFor(locale)['sheetTitle']!;
   String get searchHint => _stringsFor(locale)['searchHint']!;
   String get noResults => _stringsFor(locale)['noResults']!;
 
-  // Localized country name with fallback to the provided English name.
   String countryName(String isoCode, String fallback) {
     final iso = isoCode.toUpperCase();
     final map = _countryNamesFor(locale);
@@ -71,7 +68,6 @@ class CountryPickerLocalizations {
     }
   }
 
-  // Minimal sample; extend with more ISO codes for richer coverage.
   Map<String, String> _countryNamesFor(Locale locale) {
     switch (locale.languageCode) {
       case 'hi':

@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:world_code_picker/country_code_picker.dart';
 
-/// Immutable country model.
+
 class Country {
   final String name;
-  final String isoCode; // ISO 3166-1 alpha-2, e.g., 'US'
-  final String dialCode; // e.g., '+1'
+  final String isoCode;
+  final String dialCode;
 
   const Country({
     required this.name,
@@ -19,7 +19,6 @@ class Country {
 }
 
 String _iso2ToEmoji(String isoCode) {
-  // Converts ISO2 (A-Z) to regional indicator symbols.
   final base = 0x1F1E6;
   final upper = isoCode.toUpperCase();
   if (upper.length != 2) return '🏳️';
@@ -29,9 +28,9 @@ String _iso2ToEmoji(String isoCode) {
 
 /// Customization options for the bottom sheet.
 class CountryPickerStyle {
-  final String? sheetTitle;        // if null, uses localization
-  final String? searchHintText;    // if null, uses localization
-  final String? noResultsText;     // if null, uses localization
+  final String? sheetTitle;
+  final String? searchHintText;
+  final String? noResultsText;
   final double cornerRadius;
   final EdgeInsets contentPadding;
   final bool showSearch;
@@ -90,10 +89,7 @@ List<Country> normalizeCountries(List<Country> input) {
     ..sort((a, b) => a.name.compareTo(b.name));
 }
 
-/// Present the modal bottom sheet and return the selected country.
-/// If [countries] is empty, uses a small built-in demo list.
-/// - [initiallySelected] pre-selects a country in the list.
-/// - [favorite] pins countries (ISO2 or dial codes) as quick chips.
+
 Future<Country?> showCountryCodePickerBottomSheet({
   required BuildContext context,
   List<Country> countries = const [],
@@ -382,9 +378,6 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
     );
   }
 }
-
-// A minimal default list for demo purposes.
-// Replace with a complete ISO2 + dial code dataset for production.
 const List<Country> _defaultCountries = [
   Country(name: 'Afghanistan', isoCode: 'AF', dialCode: '+93'),
   Country(name: 'Albania', isoCode: 'AL', dialCode: '+355'),
