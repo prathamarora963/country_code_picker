@@ -4,7 +4,7 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [1.0.0] – Latest
+## [2.0.0] – Latest
 ### 🚀 Added
 - Stable release with all core features.
 - Country picker bottom sheet with smooth UI and rounded corners.
@@ -22,7 +22,7 @@ All notable changes to this project will be documented here.
 
 ---
 
-## [0.0.9] – Pre-release
+## [1.0.0] – Pre-release
 - Polished bottom sheet picker.
 - Added search field with placeholder.
 - Initial selection support.

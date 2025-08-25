@@ -27,7 +27,7 @@ Add the dependency in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  world_code_picker: ^0.0.9
+  world_code_picker: ^2.0.0
 ```
 
 Run:
